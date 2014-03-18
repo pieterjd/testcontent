@@ -1,0 +1,11 @@
+name = "Test Content"
+description = "Creates a content type"
+package = "0Development"
+core = 7.x
+
+
+;node_reference is useful but not required
+;dependencies[] = node_reference
+
+files[] = testcontent.module
+

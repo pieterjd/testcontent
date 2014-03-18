@@ -1,0 +1,29 @@
+<?php
+
+/**
+* testcontent.module based on info on http://www.avidheap.org/2013/how-to-programmatically-create-a-custom-content-type-in-drupal-7
+*/
+
+/**
+* Implements hook_node_info.
+*/
+
+function testcontent_node_info(){
+  $content['item'] = array(
+    'name' => t('Item'),
+    // check https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_info/7
+    //for more information on the base key
+    'base' => 'item',
+    'description' => t('Contains information about an item, eg title, description,
+      source url, ...'),
+    'locked' => TRUE,
+  );
+  return $content;
+}
+
+/**
+ * Implements hook_form().
+ */
+function testcontent_form($node, $form_state) {
+  return node_content_form($node, $form_state);
+}
