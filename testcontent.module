@@ -86,6 +86,17 @@ function _testcontent_installed_fields() {
       'type' => 'image', 
       'cardinality' => 1,
     ),
+    //now I'll add my own field
+    'item_source_list' => array(
+      'field_name' => 'item_source_list',
+      'cardinality' => 1,
+      //this info is from https://api.drupal.org/api/drupal/modules%21field%21modules%21list%21list.module/function/list_field_info/7
+      'type' => 'list_text',
+      'settings' => array(
+        'allowed_values' => array('bol.com','amazon.com','amazon.fr'),
+      ),
+      
+    ),
   );
 }
 
@@ -135,6 +146,12 @@ function _testcontent_installed_instances() {
           'type' => 'image_link_content__thumbnail',
         ),
       ),
+    ),
+    //my own part
+    'item_source_list' => array(
+      'field_name' => 'item_source_list',
+      'label' => t('Source'),
+      'description' => ('The website you found this item.'),
     ),
   );
 }
