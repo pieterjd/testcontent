@@ -63,7 +63,7 @@ function testcontent_node_type_insert($content_type) {
       $instance['entity_type'] = 'node';
       $instance['bundle'] = 'item';
       //only create field instance if does not exists
-      if(field_instance_info('node',$instance['field_name'],'item') == NULL){
+      if(field_info_instance('node',$instance['field_name'],'item') == NULL){
         field_create_instance($instance);
       }
     }
@@ -92,7 +92,7 @@ function _testcontent_installed_fields() {
       'type' => 'image', 
       'cardinality' => 1,
     ),
-    //now I'll add my own field
+    //now I'll add my own fields
     'item_source_list' => array(
       'field_name' => 'item_source_list',
       'cardinality' => 1,
@@ -102,6 +102,14 @@ function _testcontent_installed_fields() {
         'allowed_values' => array('bol.com','amazon.com','amazon.fr'),
       ),
       
+    ),
+    'item_source_link' => array(
+      'field_name' => 'item_source_link',
+      'cardinality' => 1,
+      'type' => 'link_field',
+      'settings' => array(
+        'title' => 'none',
+      ),
     ),
   );
 }
@@ -158,6 +166,12 @@ function _testcontent_installed_instances() {
       'field_name' => 'item_source_list',
       'label' => t('Source'),
       'description' => ('The website you found this item.'),
+      'required' => TRUE,
+    ),
+    'item_source_link' => array(
+      'field_name' => 'item_source_link',
+      'label' => t('Product link'),
+      'description' => t('Online page with information about this item.'),
     ),
   );
 }
