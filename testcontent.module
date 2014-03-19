@@ -52,14 +52,20 @@ function testcontent_node_type_insert($content_type) {
     // Create all the fields we are adding to our content type.
     foreach (_testcontent_installed_fields() as $field) {
       dsm('installing '.$field);
-      field_create_field($field);
+      //only create field if it does not exists
+      if(field_info_field($field['field_name']) == NULL){
+        field_create_field($field);
+      }
     }
 
     // Create all the instances for our fields.
     foreach (_testcontent_installed_instances() as $instance) {
       $instance['entity_type'] = 'node';
       $instance['bundle'] = 'item';
-      field_create_instance($instance);
+      //only create field instance if does not exists
+      if(field_instance_info('node',$instance['field_name'],'item') == NULL){
+        field_create_instance($instance);
+      }
     }
   }
 }
