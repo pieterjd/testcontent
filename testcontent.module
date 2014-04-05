@@ -16,7 +16,7 @@ function testcontent_node_info(){
     'base' => 'item',
     'description' => t('Contains information about an item, eg title, description,
       source url, ...'),
-    //'locked' => TRUE,
+    'locked' => FALSE,
     'has_title' => TRUE,
   );
   return $content;
@@ -74,6 +74,7 @@ function testcontent_node_type_insert($content_type) {
 */
 function _testcontent_installed_fields() {
   return array(
+  /*
     'node_example_color' => array(
       'field_name' => 'node_example_color', 
       'cardinality' => 3, 
@@ -92,6 +93,7 @@ function _testcontent_installed_fields() {
       'type' => 'image', 
       'cardinality' => 1,
     ),
+    */
     //now I'll add my own fields
     'item_source_list' => array(
       'field_name' => 'item_source_list',
@@ -111,6 +113,16 @@ function _testcontent_installed_fields() {
         'title' => 'none',
       ),
     ),
+    'item_image' => array(
+      'field_name' => 'item_image',
+      'cardinality' => 1,
+      'type' => 'image',
+      //default settings are ok
+      //cf https://api.drupal.org/api/drupal/modules%21image%21image.field.inc/function/image_field_info/7
+    ),
+    
+    //REMEMBER: if you add a new field, don't forget to delete the item record from the node_type table. 
+    //If you don't, the new field will not appear!
   );
 }
 
@@ -119,6 +131,7 @@ function _testcontent_installed_fields() {
 */
 function _testcontent_installed_instances() {
   return array(
+  /*
     'node_example_color' => array(
       'field_name' => 'node_example_color', 
       'label' => t('The colors available for this object.'), 
@@ -161,6 +174,7 @@ function _testcontent_installed_instances() {
         ),
       ),
     ),
+    */
     //my own part
     'item_source_list' => array(
       'field_name' => 'item_source_list',
@@ -172,6 +186,17 @@ function _testcontent_installed_instances() {
       'field_name' => 'item_source_link',
       'label' => t('Product link'),
       'description' => t('Online page with information about this item.'),
+      'settings' => array(
+        'title' => 'none',
+      ),
+    ),
+    'item_image' => array(
+      'field_name' => 'item_image',
+      'label' => t('Product image'),
+      'description' => t('Image of the item, often the cover in case of a book or dvd.'),
+      'required' => FALSE,
+      //default settings are ok
+      //cf https://api.drupal.org/api/drupal/modules%21image%21image.field.inc/function/image_field_info/7
     ),
   );
 }
