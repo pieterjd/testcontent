@@ -120,7 +120,11 @@ function _testcontent_installed_fields() {
       //default settings are ok
       //cf https://api.drupal.org/api/drupal/modules%21image%21image.field.inc/function/image_field_info/7
     ),
-    
+    'item_code' => array(
+      'field_name' => 'item_code',
+      'cardinality' => 1,
+      'type' => 'text',
+    ),
     //REMEMBER: if you add a new field, don't forget to delete the item record from the node_type table. 
     //If you don't, the new field will not appear!
   );
@@ -197,6 +201,16 @@ function _testcontent_installed_instances() {
       'required' => FALSE,
       //default settings are ok
       //cf https://api.drupal.org/api/drupal/modules%21image%21image.field.inc/function/image_field_info/7
+    ),
+    'item_code' => array(
+      'field_name' => 'item_code',
+      'label' => t('Product code'),
+      'description' => t('The unique code of the item.'),
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+        ),
+      ),
     ),
   );
 }
