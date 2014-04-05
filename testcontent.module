@@ -73,7 +73,7 @@ function testcontent_node_type_insert($content_type) {
 * Returns the fields for this content type.
 */
 function _testcontent_installed_fields() {
-  return array(
+  $fields = array(
   /*
     'node_example_color' => array(
       'field_name' => 'node_example_color', 
@@ -125,9 +125,41 @@ function _testcontent_installed_fields() {
       'cardinality' => 1,
       'type' => 'text',
     ),
+    
     //REMEMBER: if you add a new field, don't forget to delete the item record from the node_type table. 
     //If you don't, the new field will not appear!
   );
+  //add tags field
+  //create vocabulary
+  //cf https://api.drupal.org/api/drupal/modules%21taxonomy%21taxonomy.module/function/taxonomy_vocabulary_save/7
+  $voc = taxonomy_vocabulary_machine_name_load('product_tags');
+  dsm('product tags');
+  dsm($voc);
+
+  if(! $voc){
+    //vocabulary not yet created, so create it now
+    dsm('voc not found, creating it');
+    $voc = new StdClass();
+    $voc->name = 'Product tags';
+    $voc->machine_name = 'product_tags';
+    $voc->description = t('The tags used for the products.');
+    taxonomy_vocabulary_save($voc);
+  }
+  $fields['item_tags'] = array(
+      'field_name' => 'item_tags',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+      'type' => 'taxonomy_term_reference',
+      /*
+      'settings' => array(
+        'allowed_values' => array(
+          'vocabulary' => $voc->machine_name,
+          'parent' => 0,
+        ),
+      ),
+      */
+      
+    );
+  return $fields;
 }
 
 /**
@@ -212,5 +244,18 @@ function _testcontent_installed_instances() {
         ),
       ),
     ),
+    
+    'item_tags' => array(
+      'field_name' => 'item_tags',
+      'description' => t('Tags for this item.'),
+      'label' => t('Tags'),
+      'widget' => 'taxonomy_autocomplete',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+        ),
+      ),
+    ),
+    
   );
 }
